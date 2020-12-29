@@ -1,5 +1,8 @@
 import React from 'react';
 // import { useSelector, useDispatch } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
+
+import Routes from './Routes'
 
 function Page() {
   /**  CASO FOR USAR O REDUCERS DEIXEI ESSES DOIS COM EXEMPLO
@@ -7,9 +10,9 @@ function Page() {
   const email = useSelector(state => state.user.email)
 */
   return (
-    <div className="App">
-
-    </div>
+    <BrowserRouter>
+      <Routes />
+    </BrowserRouter>
   );
 }
 
