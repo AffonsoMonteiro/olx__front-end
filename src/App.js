@@ -2,6 +2,10 @@ import React from 'react';
 // import { useSelector, useDispatch } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 
+import { Template } from './components/MainComponents'
+import Header from './components/partials/Header'
+import Footer from './components/partials/Footer'
+
 import Routes from './Routes'
 
 function Page() {
@@ -11,7 +15,13 @@ function Page() {
 */
   return (
     <BrowserRouter>
-      <Routes />
+      <Template>
+        <Header />
+
+          <Routes />
+
+        <Footer />
+      </Template>
     </BrowserRouter>
   );
 }

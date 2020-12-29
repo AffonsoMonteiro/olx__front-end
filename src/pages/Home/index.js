@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function Home() {
     return(
-        <div>Página HOme/Inicial
+        <div>Página Página inicialInicial
             <Link to="/about">Pagina sobre</Link>
         </div>
         
