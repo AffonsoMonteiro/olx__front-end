@@ -38,4 +38,48 @@ export const HeaderArea = styled.div `
             color: #0000FF;
         }
     }
+
+    nav {
+        padding: 10px 0;
+
+
+        ul, li {
+            list-style: none;
+        }
+
+        ul {
+            display: flex;
+            align-items: center;
+            height: 40px;
+        }
+
+        li {
+            margin: 0 20px;
+
+
+            a {
+                color: #000;
+                font-size: 14px;
+                text-decoration: none;
+                transition: all ease .3s;
+
+                &:hover {
+                    color: #999;
+                }
+
+                &.button {
+                    background-color: #FF8100;
+                    border-radius: 4px;
+                    color: #FFF;
+                    padding: 5px 10px;
+                }
+
+                &.button:hover {
+                    background-color: #E57706;
+                }
+            }
+        }
+    }
+
+    
 `

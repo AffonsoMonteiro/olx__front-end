@@ -15,6 +15,20 @@ function Header() {
                         <span className="logo-3">X</span>
                     </Link>
                 </div>
+
+                <nav>
+                    <ul>
+                        <li>
+                            <Link to="">Login</Link>
+                        </li>
+                        <li>
+                            <Link to="">Cadastrar</Link>
+                        </li>
+                        <li>
+                            <Link to="" className="button">Poste um anúcio</Link>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </HeaderArea>
     )
