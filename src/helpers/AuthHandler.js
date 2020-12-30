@@ -12,3 +12,7 @@ export function doLogin(token, remenberPassword = false) {
         Cookies.set('token', token)
     }
 }
+
+export function doLogout() {
+    Cookies.remove('token')
+}

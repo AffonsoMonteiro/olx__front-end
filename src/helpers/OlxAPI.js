@@ -5,7 +5,7 @@ import qs from 'qs'
 const BASEAPI = 'http://alunos.b7web.com.br:501'
 
 const apiFetchPost = async (endpoint, body) => {
-    if(body.token) {
+    if(!body.token) {
         let token = Cookies.get('token')
         if(token) {
             body.token = token
@@ -32,15 +32,15 @@ const apiFetchPost = async (endpoint, body) => {
 }
 
 const apiFetchGet = async (endpoint, body = []) => {
-    if(body.token) {
+    if(!body.token) {
         let token = Cookies.get('token')
         if(token) {
             body.token = token
         }
     }
 
-    const res = await fetch(`${BASEAPI + endpoint} ? ${qs.stringify(body)}` )
-    const json = res.json()
+    const res = await fetch(`${BASEAPI + endpoint}? ${qs.stringify(body)}` )
+    const json = await res.json()
 
     if(json.notallowed) {
         window.location.href = '/signin'
@@ -60,6 +60,21 @@ const OlxAPI = {
         )
         return json
         
+    },
+
+    register:async (name, email, password, stateLoc) => {
+        const json = await apiFetchPost(
+            '/user/signup',
+            {name, email, password, state:stateLoc}
+        )
+        return json
+    },
+
+    getStates:async () => {
+        const json = await apiFetchGet(
+            '/states'
+        );
+        return json.states;
     }
 
 }
