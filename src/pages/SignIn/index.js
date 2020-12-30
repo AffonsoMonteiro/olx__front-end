@@ -27,6 +27,8 @@ function SignIn() {
 
             window.location.href = '/'
         }
+
+        setDisabled(false)
     }
 
     return (
