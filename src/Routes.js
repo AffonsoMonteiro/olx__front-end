@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
+import AdPage from './pages/AdPage'
 import NotFound from './pages/NotFound'
 
 export default () => {
@@ -24,6 +25,10 @@ export default () => {
 
             <Route path="/signup">
                 <SignUp />
+            </Route>
+            
+            <Route path="/ad/:id">
+                <AdPage />
             </Route>
 
             <Route>
