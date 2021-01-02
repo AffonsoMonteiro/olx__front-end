@@ -11,7 +11,7 @@ import Footer from './components/partials/Footer'
 import Routes from './Routes'
 
 function Page() {
-  /**  CASO FOR USAR O REDUCERS DEIXEI ESSES DOIS COM EXEMPLO
+  /**  CASO FOR USAR O REDUCERS DEIXEI ESSES DOIS
   const dispatch = useDispatch()
   const email = useSelector(state => state.user.email)
 */

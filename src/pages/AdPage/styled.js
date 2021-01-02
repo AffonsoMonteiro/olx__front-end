@@ -32,7 +32,7 @@ export const PageArea = styled.div `
             padding: 10px;
 
             .adName{
-                margin: 20px 0;
+                margin-bottom: 20px;
             }
 
             .adDescription{}

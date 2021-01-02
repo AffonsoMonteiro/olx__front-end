@@ -39,7 +39,7 @@ const apiFetchGet = async (endpoint, body = []) => {
         }
     }
 
-    const res = await fetch(`${BASEAPI + endpoint}? ${qs.stringify(body)}` )
+    const res = await fetch(`${BASEAPI + endpoint}?${qs.stringify(body)}` )
     const json = await res.json()
 
     if(json.notallowed) {
@@ -90,7 +90,16 @@ const OlxAPI = {
             options
         )
         return json
-    }
+    },
+
+    getAd:async (id, other = false) => {
+        const json = await apiFetchGet(
+            '/ad/item',
+            {id, other}
+        )
+        return json
+    },
+
 
 }
 
