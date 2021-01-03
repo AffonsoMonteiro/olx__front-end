@@ -1,84 +1,176 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useHistory } from 'react-router-dom'
+import MaskedInput from 'react-text-mask'
+import createNumberMask from 'text-mask-addons/dist/createNumberMask'
 import { PageArea } from './styled' 
 import useApi from '../../helpers/OlxAPI'
-import { doLogin } from '../../helpers/AuthHandler'
+
 
 import { PageContainer, PageTitle, ErrorMessage } from '../../components/MainComponents'
 
 function SignIn() {
     const api = useApi()
+    const history = useHistory()
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [remenberPassword, setRemenberPassword] = useState(false)
+    const filefield = useRef()
+    
+    const [ categoryList, setCategoryList] = useState([])
+
+    const [title, setTitle] = useState('')
+    const [ category, setCategory] = useState('')
+    const [ price, setPrice] = useState('')
+    const [ priceNegotiable, setPriceNegotiable] = useState(false)
+    const [ description, setDescription] = useState('')
+
+    
     const [ disabled, setDisabled] = useState(false)
     const [ error, setError] = useState('')
+
+    useEffect(() => {
+        const getCategories = async () => {
+            const cats = await api.getCategories()
+            setCategoryList(cats)
+        }
+        getCategories()
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setDisabled(true)
         setError('')
 
-        const json = await api.login(email, password)
+        let errors = []
 
-        if(json.error) {
-            setError(json.error)
+        if(!title.trim()) {
+            errors.push('Digite um título')
+        }
+
+        if( !category) {
+            errors.push('Selecione uma categoria')
+        }
+
+        if(errors.length === 0) {
+
+            const fData = new FormData()
+            fData.append('title', title)
+            fData.append('price', price)
+            fData.append('priceneg', priceNegotiable)
+            fData.append('desc', description)
+            fData.append('cat', category)
+
+            if(filefield.current.files.length > 0) {
+                for(let i = 0; i > filefield.current.files.length; i++) {
+                    fData.append('img', filefield.current.files[i])
+                }
+            }
+
+            const json = await api.addAd(fData)
+
+            if(!json.error) {
+                history.push(`/ad/${json.id} `)
+                return 
+            } else {
+                setError(json.error)
+            }
+
         } else {
-            doLogin(json.token, remenberPassword)
-
-            window.location.href = '/'
+            setError(errors.join("\n"))
         }
 
         setDisabled(false)
     }
 
+    const priceMask = createNumberMask({
+        prefix: 'R$  ',
+        includeThousandsSeparator: true,
+        thousandsSeparatorSymbol: '.', 
+        allowDecimal: true,
+        decimalSymbol: ','
+    })
+
     return (
         <PageContainer>
-            <PageTitle>Login</PageTitle>
+            <PageTitle>Postar um Anúncio</PageTitle>
             <PageArea>
                 { error && 
                     <ErrorMessage> {error}</ErrorMessage>
                 }
                 <form onSubmit={handleSubmit}>
                     <label className="area">
-                        <div className="area--title">E-mail</div>
+                        <div className="area--title">Titulo</div>
                         <div className="area--input">
                             <input 
-                                type="email"
+                                type="text"
                                 disabled={disabled} 
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
+                                value={title}
+                                onChange={e => setTitle(e.target.value)}
                                 required
                             />
                         </div>
                     </label>
                     <label className="area">
-                        <div className="area--title">Senha</div>
+                        <div className="area--title">Categoria</div>
                         <div className="area--input">
-                            <input 
-                                type="password" 
-                                disabled={disabled} 
-                                value={password}
-                                onChange={e => setPassword(e.target.value)}
-                                required
+                            <select disabled={disabled} onChange={e => setCategory(e.target.value)} required>
+                                <option></option>
+                                {categoryList && categoryList.map(i =>
+                                    <option key={i._id} value={i._id}> {i.name} </option>
+                                )}
+                            </select>
+                        </div>
+                    </label>
+                    <label className="area">
+                        <div className="area--title">Preço</div>
+                        <div className="area--input">
+                            <MaskedInput  
+                                mask={ priceMask }
+                                placeholder="R$ "
+                                disabled={ disabled || priceNegotiable }
+                                value={ price}
+                                onChange={e => setPrice(e.target.value)}
                             />
                         </div>
                     </label>
                     <label className="area">
-                        <div className="area--title">Lembrar senha</div>
+                        <div className="area--title">Preço Negociável</div>
                         <div>
                             <input 
-                                type="checkbox" 
+                                type="checkbox"
                                 disabled={disabled} 
-                                checked={remenberPassword}
-                                onChange={ () => setRemenberPassword(!remenberPassword) }
+                                value={priceNegotiable}
+                                onChange={e => setPriceNegotiable(!priceNegotiable)}
+                                
+                            />
+                        </div>
+                    </label>
+                    <label className="area">
+                        <div className="area--title">Descrição</div>
+                        <div className="area--input">
+                            <textarea 
+                                disabled={disabled}
+                                value={description}
+                                onChange={e => setDescription(e.target.value)}
+                            >
+
+                            </textarea>
+                        </div>
+                    </label>
+                    <label className="area">
+                        <div className="area--title">Imagens (1 ou mais )</div>
+                        <div className="area--input">
+                            <input 
+                                type="file"
+                                disabled={disabled} 
+                                ref = { filefield }
+                                multiple
+                                required
                             />
                         </div>
                     </label>
                     <label className="area">
                         <div className="area--title"></div>
                         <div className="area--input">
-                            <button disabled={disabled}>Entrar</button>
+                            <button disabled={disabled}>Adicionar Anúncio</button>
                         </div>
                     </label>
                 </form>
