@@ -36,7 +36,7 @@ function Header() {
                                     <button onClick={handleLogout}>Sair</button>
                                 </li>
                                 <li>
-                                    <Link to="/post-an-add" className="button">Poste um anúcio</Link>
+                                    <Link to="/post-an-ad" className="button">Poste um anúcio</Link>
                                 </li>
                             </>
                         }
@@ -50,7 +50,7 @@ function Header() {
                                     <Link to="/signup">Cadastrar</Link>
                                 </li>
                                 <li>
-                                    <Link to="/post-an-add" className="button">Poste um anúcio</Link>
+                                    <Link to="/signin" className="button">Poste um anúcio</Link>
                                 </li>
                             </>
                         }

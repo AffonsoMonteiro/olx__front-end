@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
 
-import RouteHandler from './components/RouterHandler'
+import RouteHandler from './components/RouteHandler'
 
 import Home from './pages/Home'
 import About from './pages/About'
