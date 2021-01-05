@@ -6,7 +6,8 @@ import { FooterArea } from './styled'
 function Footer() {
     return (
         <FooterArea>
-            FooterArea
+            Todos os direitos reservados <br/>
+            OLX Clone
         </FooterArea>
     )
 }

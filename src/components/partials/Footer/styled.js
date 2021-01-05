@@ -1,6 +1,14 @@
 import styled from 'styled-components'
 
 export const FooterArea = styled.div `
+
     height: 100px;
-    background: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #999;
+    font-size:14px;
+    border-top: 1px solid #CCC;
+    margin-top: 30px;
 `

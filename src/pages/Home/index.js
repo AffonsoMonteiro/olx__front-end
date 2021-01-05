@@ -46,7 +46,7 @@ function SignIn() {
             <SearchArea>
                 <PageContainer>
                     <div className="searchBox">
-                        <form method="POST" action="/ads">
+                        <form method="GET" action="/ads">
                             <input type="text" name="q" placeholder="O que você procura?" />
                             <select name="state">
                                 {stateList.map( (i, k) =>
@@ -59,7 +59,7 @@ function SignIn() {
 
                     <div className="categoryList">
                         {categories.map((i, k) => 
-                            <Link key={k} to={`/ads?cats=${i.slug}`} className="categoryItem" >
+                            <Link key={k} to={`/ads?cat=${i.slug}`} className="categoryItem" >
                                 <img src={i.img} alt={i.name} />
                                 <span> {i.name} </span>
                             </Link>
