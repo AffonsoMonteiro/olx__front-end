@@ -6,7 +6,7 @@ import useApi from '../../helpers/OlxAPI'
 
 import { PageContainer } from '../../components/MainComponents'
 import AdItem from '../../components/partials/AdItem'
-import { set } from 'js-cookie';
+
 
 let timer
 
@@ -43,7 +43,7 @@ function SignIn() {
         
         const json = await api.getAds({
             sort: 'desc',
-            limit: 9,
+            limit: 15,
             q,
             cat,
             state,
@@ -176,7 +176,7 @@ function SignIn() {
 
                         <div className="pagination">
                             {pagination.map((i, k) =>
-                                <div onClick={() => setCurrentPage(i)} className={i === currentPage ? 'pagItem active' : 'pagItem'}>
+                                <div key={k} onClick={() => setCurrentPage(i)} className={i === currentPage ? 'pagItem active' : 'pagItem'}>
                                     {i}
                                 </div>
                             )}
